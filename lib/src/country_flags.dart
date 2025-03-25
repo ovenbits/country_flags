@@ -105,7 +105,7 @@ class CountryFlag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_customEnglishFlag.contains(flagCode)) {
+    if (_customEnglishFlag.contains(flagCode?.toLowerCase())) {
       return Stack(
         children: [
           SizedBox(
@@ -132,7 +132,7 @@ class CountryFlag extends StatelessWidget {
           ),
         ],
       );
-    } else if (_additionalFlags.contains(flagCode)) {
+    } else if (_additionalFlags.contains(flagCode?.toLowerCase())) {
       return SizedBox(
         width: width,
         height: height,
