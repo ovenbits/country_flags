@@ -100,6 +100,7 @@ class CountryFlag extends StatelessWidget {
 
   List<String> get _customEnglishFlag => const [
         'en',
+        'us',
         'gb',
       ];
 
