@@ -363,7 +363,6 @@ class FlagCode {
     'kaa': 'kaa',
     'kn': 'in',
     'ko': 'kr',
-    'ku': 'iq',
     'ky': 'kg',
     'lo': 'la',
     'lt': 'lt',
@@ -410,6 +409,11 @@ class FlagCode {
     'zh-tw': 'tw',
     'zu': 'za',
     'ber': 'ber',
+    'ku': 'ku',
+    'mas': 'mas',
+    'os': 'os',
+    'ug_cn': 'ug_cn',
+    'tz_ke': 'tz_ke',
   };
 
   /// Get the flag code from a language code.

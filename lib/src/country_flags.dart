@@ -97,6 +97,10 @@ class CountryFlag extends StatelessWidget {
         'hmn',
         'kaa',
         'ber',
+        'ku',
+        'mas',
+        'os',
+        'ug_cn',
       ];
 
   List<String> get _customEnglishFlag => const [
@@ -127,6 +131,33 @@ class CountryFlag extends StatelessWidget {
                 clipper: FlagsClipper(),
                 child: SvgPicture.asset(
                   'packages/country_flags/res/svg/us.svg',
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    } else if (flagCode?.toLowerCase() == 'tz_ke') {
+      return Stack(
+        children: [
+          SizedBox(
+            width: width,
+            height: height,
+            child: SvgPicture.asset(
+              'packages/country_flags/res/svg/tz.svg',
+              fit: BoxFit.fill,
+            ),
+          ),
+          SizedBox(
+            width: width,
+            height: height,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(),
+              child: ClipPath(
+                clipper: FlagsClipper(),
+                child: SvgPicture.asset(
+                  'packages/country_flags/res/svg/ke.svg',
                   fit: BoxFit.fill,
                 ),
               ),
