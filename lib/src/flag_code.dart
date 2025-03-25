@@ -45,6 +45,7 @@ class FlagCode {
     ['BLZ', 'BZ']: 'bz',
     ['CAN', 'CA']: 'ca',
     ['CCK', 'CC']: 'cc',
+    ['CE', 'CE']: 'ce',
     ['COD', 'CD']: 'cd',
     ['CAF', 'CF']: 'cf',
     ['COG', 'CG']: 'cg',
@@ -260,6 +261,8 @@ class FlagCode {
     ['ZAF', 'ZA']: 'za',
     ['ZMB', 'ZM']: 'zm',
     ['ZWE', 'ZW']: 'zw',
+    ['HMN', 'HMN']: 'HMN',
+    ['KAA', 'KAA']: 'KAA',
   };
 
   static const Map<String, String> _flagCodesLanguages = {
@@ -290,7 +293,7 @@ class FlagCode {
     'bn': 'bd',
     'bs': 'ba',
     'ca': 'ca',
-    'ce' : 'ce',
+    'ce': 'ce',
     'ceb': 'ph',
     'cs': 'cz',
     'cs-cz': 'cz',
@@ -415,15 +418,11 @@ class FlagCode {
   /// Source of the language codes:
   /// http://www.lingoes.net/en/translator/langcode.htm
   static String? fromLanguageCode(String languageCode) =>
-      _flagCodesLanguages.entries
-          .singleWhereOrNull((entry) => entry.key == languageCode)
-          ?.value;
+      _flagCodesLanguages.entries.singleWhereOrNull((entry) => entry.key == languageCode)?.value;
 
   /// Get the flag code from a country code.
   ///
   /// Returns `null` if the country code is not found.
   static String? fromCountryCode(String countryCode) =>
-      _flagCodesCountries.entries
-          .singleWhereOrNull((entry) => entry.key.contains(countryCode))
-          ?.value;
+      _flagCodesCountries.entries.singleWhereOrNull((entry) => entry.key.contains(countryCode))?.value;
 }
