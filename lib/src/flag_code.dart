@@ -409,6 +409,7 @@ class FlagCode {
     'zh-cn': 'cn',
     'zh-tw': 'tw',
     'zu': 'za',
+    'ber': 'ber',
   };
 
   /// Get the flag code from a language code.
