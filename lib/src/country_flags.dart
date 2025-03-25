@@ -1,6 +1,8 @@
 import 'package:country_flags/country_flags.dart';
+import 'package:country_flags/src/flags_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:jovial_svg/jovial_svg.dart';
 
 /// The shape of the flag.
@@ -90,8 +92,55 @@ class CountryFlag extends StatelessWidget {
   /// The flag shape: 'circle' or 'rectangle'.
   final Shape shape;
 
+  List<String> get _additionalFlags => const [
+        'ce',
+        'hmn',
+        'kaa',
+      ];
+
+  List<String> get _customEnglishFlag => const [
+        'en',
+        'gb',
+      ];
+
   @override
   Widget build(BuildContext context) {
+    if (_customEnglishFlag.contains(flagCode)) {
+      return Stack(
+        children: [
+          SizedBox(
+            width: width,
+            height: height,
+            child: SvgPicture.asset(
+              'packages/country_flags/res/svg/gb.svg',
+              fit: BoxFit.fill,
+            ),
+          ),
+          SizedBox(
+            width: width,
+            height: height,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(),
+              child: ClipPath(
+                clipper: FlagsClipper(),
+                child: SvgPicture.asset(
+                  'packages/country_flags/res/svg/us.svg',
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    } else if (_additionalFlags.contains(flagCode)) {
+      return SizedBox(
+        width: width,
+        height: height,
+        child: SvgPicture.asset(
+          'packages/country_flags/res/svg/$flagCode.svg',
+        ),
+      );
+    }
     return switch (shape) {
       Rectangle() => _RectangularFlag(
           flagCode: flagCode,

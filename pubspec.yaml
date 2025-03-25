@@ -11,6 +11,7 @@ dependencies:
   collection: ^1.18.0
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.17
   jovial_svg: ^1.1.14
 
 dev_dependencies:
@@ -22,3 +23,4 @@ dev_dependencies:
 flutter:
   assets:
     - res/si/
+    - res/svg/
