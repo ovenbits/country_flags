@@ -263,6 +263,7 @@ class FlagCode {
     ['ZWE', 'ZW']: 'zw',
     ['HMN', 'HMN']: 'HMN',
     ['KAA', 'KAA']: 'KAA',
+    ['GLK', 'GLK']: 'GLK',
   };
 
   static const Map<String, String> _flagCodesLanguages = {
@@ -345,6 +346,7 @@ class FlagCode {
     'fr': 'fr',
     'fr-mc': 'mc',
     'gl': 'gl',
+    'glk': 'glk',
     'gu': 'gu',
     'he': 'il',
     'hi': 'in',
