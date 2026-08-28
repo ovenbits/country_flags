@@ -324,6 +324,10 @@ class _FlagImage extends StatelessWidget {
     return ScalableImageWidget.fromSISource(
       key: const Key('svgFlag'),
       cache: _cache,
+      // Flags are detailed vector art and several carry a coat of arms, so
+      // let the raster cache keep the painted result instead of replaying
+      // every path on each frame of a scroll.
+      isComplex: true,
       si: ScalableImageSource.fromSI(
         rootBundle,
         'packages/country_flags/res/si/$flagCode.si',
