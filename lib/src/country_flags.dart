@@ -306,6 +306,16 @@ class _FlagImage extends StatelessWidget {
     this.fit = BoxFit.contain,
   });
 
+  /// Retains parsed flags across widget rebuilds.
+  ///
+  /// Without a cache, [ScalableImageWidget.fromSISource] falls back to a
+  /// zero-size default, so a flag scrolling out of view is evicted at once and
+  /// re-parsed when it scrolls back. On Flutter web (Skwasm) that eviction also
+  /// releases native `Path` objects that queued pictures still reference, which
+  /// crashes the renderer with "memory access out of bounds". Sized to hold
+  /// every flag in the pack.
+  static final _cache = ScalableImageCache(size: 300);
+
   final BoxFit fit;
   final String? flagCode;
 
@@ -313,6 +323,7 @@ class _FlagImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScalableImageWidget.fromSISource(
       key: const Key('svgFlag'),
+      cache: _cache,
       si: ScalableImageSource.fromSI(
         rootBundle,
         'packages/country_flags/res/si/$flagCode.si',
