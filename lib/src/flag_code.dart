@@ -369,6 +369,7 @@ class FlagCode {
     'lo': 'la',
     'lt': 'lt',
     'lv': 'lv',
+    'mai': 'mai',
     'mg': 'mg',
     'mk': 'mk',
     'ml': 'in',

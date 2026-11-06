@@ -17,6 +17,10 @@ void main() {
       expect(FlagCode.fromLanguageCode('en'), isA<String>());
     });
 
+    test('maps Maithili to its language flag', () {
+      expect(FlagCode.fromLanguageCode('mai'), 'mai');
+    });
+
     test('returns null for an invalid language code', () {
       expect(FlagCode.fromLanguageCode('zz'), isNull);
     });
