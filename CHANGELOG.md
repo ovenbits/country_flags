@@ -46,3 +46,8 @@
 ## 3.2.0
 
 - feat: change Syrian flag
+
+## Unreleased
+
+- Fix blank duplicate flags containing embedded images by sharing the pending
+  image preparation until every mounted flag can paint it.

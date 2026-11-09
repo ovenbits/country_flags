@@ -333,6 +333,98 @@ class _FlagImage extends StatelessWidget {
         'packages/country_flags/res/si/$flagCode.si',
       ),
       fit: fit,
+      // Wait for the shared decode before mounting any painter. Concurrent
+      // prepareImages calls in jovial_svg can complete before decoding does.
+      onLoaded: (context, si) => _PreparedFlag(si: si, fit: fit),
     );
+  }
+}
+
+class _PreparedFlag extends StatefulWidget {
+  const _PreparedFlag({required this.si, required this.fit});
+
+  final ScalableImage si;
+  final BoxFit fit;
+
+  @override
+  State<_PreparedFlag> createState() => _PreparedFlagState();
+}
+
+class _PreparedFlagState extends State<_PreparedFlag> {
+  late _FlagPreparation _preparation;
+
+  @override
+  void initState() {
+    super.initState();
+    _preparation = _FlagPreparation.acquire(widget.si);
+  }
+
+  @override
+  void didUpdateWidget(_PreparedFlag oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.si, widget.si)) {
+      _preparation.release();
+      _preparation = _FlagPreparation.acquire(widget.si);
+    }
+  }
+
+  @override
+  void dispose() {
+    _preparation.release();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<void>(
+        // A new image must not reuse the completed snapshot of the old one.
+        key: ObjectKey(_preparation),
+        future: _preparation.ready,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return ErrorWidget(snapshot.error!);
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const SizedBox.shrink();
+          }
+          return ScalableImageWidget(
+            si: widget.si,
+            fit: widget.fit,
+            isComplex: true,
+          );
+        },
+      );
+}
+
+/// One preparation lease per shared image, including while decoding is pending.
+/// The parsed-image cache remains bounded independently of these active leases.
+class _FlagPreparation {
+  _FlagPreparation._(this.si) {
+    ready = si.prepareImages().whenComplete(() {
+      _complete = true;
+      _releaseIfUnused();
+    });
+  }
+
+  factory _FlagPreparation.acquire(ScalableImage si) {
+    final preparation = _pending[si] ??= _FlagPreparation._(si);
+    preparation._references++;
+    return preparation;
+  }
+
+  static final _pending = Expando<_FlagPreparation>();
+
+  final ScalableImage si;
+  late final Future<void> ready;
+  var _references = 0;
+  var _complete = false;
+
+  void release() {
+    _references--;
+    _releaseIfUnused();
+  }
+
+  void _releaseIfUnused() {
+    if (_references == 0 && _complete) {
+      si.unprepareImages();
+      _pending[si] = null;
+    }
   }
 }
