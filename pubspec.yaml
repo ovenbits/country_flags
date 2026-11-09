@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.17
-  jovial_svg: ^1.1.14
+  # onLoaded was added in 1.1.28; it gates shared embedded-image decoding.
+  jovial_svg: ^1.1.28
 
 dev_dependencies:
   flutter_test:
